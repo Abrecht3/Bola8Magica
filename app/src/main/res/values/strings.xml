@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Bola 8 Magica</string>
+    <string name="pregunta">Haz una pregunta</string>
+
+    <!--Respuestas a la pregunta realizada -->
+    <string name="a">Como lo veo … Si</string>
+    <string name="b">Es Seguro</string>
+    <string name="c">Decididamente Si</string>
+    <string name="d">Sin Lugar a Dudas</string>
+    <string name="e">Positivamente</string>
+    <string name="f">Parece ser que Si</string>
+    <string name="g">Es lo mas Probable</string>
+    <string name="h">Si</string>
+    <string name="i">Puedes Confiar en eso</string>
+    <string name="j">Si - Definitivo</string>
+    <string name="k">Respuesta Ambigua … Intente de Nuevo</string>
+    <string name="l">Preguntame Despues</string>
+    <string name="m">Mejor no te Digo ahorita</string>
+    <string name="n">No puedo Predecirlo ahora</string>
+    <string name="o">Concentrate y vuelve a preguntar</string>
+    <string name="p">No cuentes con ello</string>
+    <string name="q">Mi respuesta es no</string>
+    <string name="r">Mis fuentes dicen que no</string>
+    <string name="s">No parece que pase</string>
+    <string name="t">lo dudo mucho</string>
+    <string name="u">No</string>
+</resources>
