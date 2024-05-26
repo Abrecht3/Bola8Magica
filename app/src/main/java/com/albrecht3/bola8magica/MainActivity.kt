@@ -1,12 +1,9 @@
 package com.albrecht3.bola8magica
 
-import android.app.Activity
+
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.View
-import android.view.inputmethod.InputMethod
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnBola8.setOnClickListener(){
+        btnBola8.setOnClickListener{
             it.animate().rotationBy(720F).setDuration(360).start()
             if(pregunta.text.isNotEmpty()){
                 respuestas()
