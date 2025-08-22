@@ -1,77 +1,101 @@
 package com.albrecht3.bola8magica
 
-
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Dialog
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.appcompat.app.AppCompatActivity
+import com.albrecht3.bola8magica.databinding.ActivityMainBinding
+import com.albrecht3.bola8magica.databinding.DialogPredictionBinding
+import com.google.android.material.button.MaterialButton
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
+    val predicciones=listOf<String>(
+        "Como lo veo … Si",
+        "Es Seguro",
+        "Decididamente Si",
+        "Sin Lugar a Dudas",
+        "Positivamente",
+        "Parece ser que Si",
+        "Es lo mas Probable",
+        "Si",
+        "Puedes Confiar en eso",
+        "Definitivamente",
+        "No esttoy segura … Intenta de Nuevo",
+        "Mejor Preguntame Despues",
+        "Mejor no te Digo",
+        "No puedo Predecirlo ahora",
+        "Concentrate y vuelve a preguntar",
+        "No cuentes con ello",
+        "Mi respuesta es no",
+        "Mis fuentes dicen que no",
+        "No parece que pase",
+        "lo dudo mucho",
+        "No",
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        enableEdgeToEdge()
+        setContentView(binding.root)
 
-        btnBola8.setOnClickListener{
-            it.animate().rotationBy(720F).setDuration(360).start()
-            if(pregunta.text.isNotEmpty()){
-                respuestas()
-                closeKeyboard()
-            }else{
-                showAlert()
+        magicBall8()
+    }
+
+    private fun magicBall8() {
+        binding.apply {
+            btnBola8.setOnClickListener {
+                if (etPregunta.text.isNotEmpty()) {
+                    it.animate().rotationBy(1800f).setDuration(1000).start()
+                    showDialogCustom()
+                    closeKeyboard()
+                }
+
             }
         }
     }
 
     private fun closeKeyboard() {
-        val view = this.currentFocus
-        val imm: InputMethodManager =
-            (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).also {
-                if (view != null) {
-                    it.hideSoftInputFromWindow(view.windowToken, 0)
-                }
-            }
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.main.windowToken,0)
     }
 
-    private fun respuestas(){
-        var respuesta = (0..20).random()
-        when(respuesta){
-            0 -> { txtResp.text = getString(R.string.a) }
-            1 -> { txtResp.text = getString(R.string.b) }
-            2 -> { txtResp.text = getString(R.string.c)}
-            3 -> { txtResp.text = getString(R.string.d) }
-            4 -> { txtResp.text = getString(R.string.e)}
-            5 -> { txtResp.text = getString(R.string.f) }
-            6 -> { txtResp.text = getString(R.string.g) }
-            7 -> { txtResp.text = getString(R.string.h)}
-            8 -> { txtResp.text = getString(R.string.i) }
-            9 -> { txtResp.text = getString(R.string.j)}
-            10 -> { txtResp.text = getString(R.string.k) }
-            11 -> { txtResp.text = getString(R.string.l) }
-            12 -> { txtResp.text = getString(R.string.m)}
-            13 -> { txtResp.text = getString(R.string.n) }
-            14 -> { txtResp.text = getString(R.string.o)}
-            15 -> { txtResp.text = getString(R.string.p) }
-            16 -> { txtResp.text = getString(R.string.q) }
-            17 -> { txtResp.text = getString(R.string.r)}
-            18 -> { txtResp.text = getString(R.string.s) }
-            19 -> { txtResp.text = getString(R.string.t)}
-            20 -> { txtResp.text = getString(R.string.u)}
+    private fun predictions(): String {
+        val respuesta = predicciones.random()
+        return respuesta
+    }
+
+    private fun showDialog(){
+        val message = predictions()
+        AlertDialog.Builder(this)
+            .setMessage(message)
+            .setPositiveButton("Regresar") { _, _ ->
+                resetText()
+            }.setCancelable(false).show()
+    }
+    private fun showDialogCustom(){
+        val dialog = Dialog(this)
+        val dialogBinding = DialogPredictionBinding.inflate(layoutInflater)
+        dialog.setContentView(dialogBinding.root)
+        dialog.setCancelable(false)
+
+        dialogBinding.tvResponse.text = predictions()
+        dialogBinding.btnClose.setOnClickListener {
+            dialog.hide()
+            resetText()
         }
-    }
 
-    private fun showAlert(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Debes ingresar una pregunta")
-        builder.setPositiveButton("Aceptar",null)
-        val dialog=builder.create()
         dialog.show()
     }
 
+    private fun resetText() {
+        binding.etPregunta.setText("")
+    }
+
 }
-
-
-
